@@ -1,0 +1,28 @@
+[Unit]
+Description=example-voting-app - with rootless podman-compose
+After=network.target
+
+[Service]
+TimeoutStartSec=5m
+Restart=always
+
+# Set User and Group
+User=eva
+Group=eva
+
+# Set WorkingDirectory and all paths below
+WorkingDirectory=/home/eva/example-voting-app
+
+ExecStartPre=/usr/bin/scl enable rh-python36 "python -m venv venv"
+
+# Requirements must be have been downloaded to /opt/eva-python/packages/
+# E.g. pip download --require-hashes -r requirements.txt --dest /opt/eva-python/packages/
+ExecStartPre=/home/eva/example-voting-app/venv/bin/pip install --no-index --find-links=/opt/eva-python/packages/ -r requirements.txt --require-hashes
+
+ExecStartPre=-/home/eva/example-voting-app/venv/bin/podman-compose down
+ExecStart=/home/eva/example-voting-app/venv/bin/podman-compose up
+
+ExecStop=/home/eva/example-voting-app/venv/bin/podman-compose down
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+pyyaml         == 5.1.2 --hash=sha256:b0997827b4f6a7c286c01c5f60384d218dca4ed7d9efa945c3e1aa623d5709ae \
+                        --hash=sha256:01adf0b6c6f61bd11af6e10ca52b7d4057dd0be0343eb9283c878cf3af56aee4
+podman-compose == 0.1.5 --hash=sha256:c4c03066f0b1254bad87df87cf2107b51b78a8a75f1550ee5dfa674b9ebaeb18 \
+                        --hash=sha256:fb229362f188980ea3fbdee2a25d0a2dd6a0b886d925d5213e22e09f1062ebe9

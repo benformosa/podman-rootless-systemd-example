@@ -1,0 +1,37 @@
+# This file is modified from
+# https://github.com/dockersamples/example-voting-app/blob/master/docker-compose-simple.yml
+#
+# Copyright 2016 Docker, Inc.
+---
+version: "3"
+
+services:
+  vote:
+    image: docker.io/docker/example-voting-app-vote:latest
+    command:
+      - 'python'
+      - '-c'
+      - 'import app; app.app.run(host="0.0.0.0", port=5000, threaded=True)'
+    ports:
+      - "5000:5000"
+
+  redis:
+    image: docker.io/redis:alpine
+    ports: ["6379"]
+    volumes:
+      - redis:/data
+
+  worker:
+    image: docker.io/docker/example-voting-app-worker:latest
+
+  db:
+    image: docker.io/postgres:9.4
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  result:
+    image: docker.io/docker/example-voting-app-result:latest
+    command: nodemon server.js
+    ports:
+      - "5001:80"
+      - "5858:5858"
